@@ -1,7 +1,7 @@
 ﻿namespace ExevopanNotification.ApplicationCore.Interfaces.Services
 {
-    public interface INotifyService
+    public interface IExevoPanService
     {
-        Task Notify();
+        Task FindAndNotify();
     }
 }

@@ -15,9 +15,9 @@ namespace ExevopanNotification.Repository.Repositories
 
         public async Task<AuctionResponse> GetCurrentAuctions(AuctionFilter auctionFilter)
         {
-            var response = await _httpClient.PostAsJsonAsync("", auctionFilter.ToJson());
+            var response = await _httpClient.PostAsync("", auctionFilter.ToStringContent());
 
-            return await response.Content.ReadAsAsync<AuctionResponse>();
+            return (await response.Content.ReadAsStringAsync()).ParseJson<AuctionResponse>()!;
         }
     }
 }

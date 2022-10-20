@@ -1,6 +1,7 @@
 
 using ExevopanNotification.CrossCutting.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 public class Program
@@ -49,6 +50,7 @@ public class Program
         {
             options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
         });
 
 

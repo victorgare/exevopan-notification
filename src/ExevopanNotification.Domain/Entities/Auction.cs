@@ -1,10 +1,13 @@
-﻿namespace ExevopanNotification.Domain.Entities
+﻿using ExevopanNotification.Utils.Utils;
+
+namespace ExevopanNotification.Domain.Entities
 {
     public class Auction
     {
         public int Id { get; set; }
         public string Nickname { get; set; }
-        public int AuctionEnd { get; set; }
+        public double AuctionEnd { get; set; }
+        public DateTime AuctionEndDateTime { get => AuctionEnd.UnixTimeStampToDateTime(); }
         public int CurrentBid { get; set; }
         public bool HasBeenBidded { get; set; }
         public string OutfitId { get; set; }
