@@ -13,4 +13,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ExevopanNotification.ApplicationCore\ExevopanNotification.ApplicationCore.csproj" />
+    <ProjectReference Include="..\ExevopanNotification.Repository\ExevopanNotification.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

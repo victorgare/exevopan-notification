@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExevopanNotification.Api.Controllers.V1
 {
-    [ApiVersion("1")]
+    //[ApiVersion("1")]
     public class NotifyController : BaseController
     {
         [HttpPost]

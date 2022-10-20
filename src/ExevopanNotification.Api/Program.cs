@@ -13,7 +13,7 @@ public class Program
         ConfigureServices(builder.Services);
 
         // Configure DI
-        //builder.Services.AddDependencies(builder.Configuration);
+        builder.Services.AddDependencies(builder.Configuration);
 
         // configure HealthCheck
         builder.Services.AddCustomHealthCheck(builder.Configuration);
