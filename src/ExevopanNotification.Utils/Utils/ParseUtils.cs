@@ -40,5 +40,10 @@ namespace ExevopanNotification.Utils.Utils
             dateTime = dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
             return dateTime;
         }
+
+        public static long ToUnixTimeSeconds(this DateTime date)
+        {
+            return ((DateTimeOffset)date).ToUnixTimeSeconds();
+        }
     }
 }
