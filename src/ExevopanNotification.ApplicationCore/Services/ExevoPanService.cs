@@ -1,24 +1,27 @@
 ﻿using ExevopanNotification.ApplicationCore.Interfaces.Repositories;
 using ExevopanNotification.ApplicationCore.Interfaces.Services;
+using ExevopanNotification.Domain.Config;
 using ExevopanNotification.Domain.Entities;
 using ExevopanNotification.Domain.Enums;
+using Microsoft.Extensions.Options;
 
 namespace ExevopanNotification.ApplicationCore.Services
 {
     public class ExevoPanService : IExevoPanService
     {
         private readonly IExevoPanRepository _exevoPanRepository;
+        private readonly INotifyService _notifyService;
+        private readonly QueryConfig _queryConfig;
 
-        public ExevoPanService(IExevoPanRepository exevoPanRepository)
+        public ExevoPanService(IExevoPanRepository exevoPanRepository, INotifyService notifyService, IOptions<ApplicationConfig> appConfig)
         {
             _exevoPanRepository = exevoPanRepository;
+            _notifyService = notifyService;
+            _queryConfig = appConfig.Value.QueryConfig;
         }
 
         public async Task FindAndNotify()
         {
-            var minutesToGo = 30;
-            var maximumBid = 750;
-
             var auctionFilter = new AuctionFilter
             {
                 PaginationOptions = new PaginationOptions
@@ -43,8 +46,10 @@ namespace ExevopanNotification.ApplicationCore.Services
 
             // get all auctions that lefts `minutesToGo` minutes
             // and price is less than `maximumBid`
-            var auctionsFinishingSoon = auctions.Auctions.Where(c => (c.AuctionEndDateTime - DateTime.Now).TotalMinutes <= minutesToGo &&
-                                                                     c.CurrentBid <= maximumBid);
+            var auctionsFinishingSoon = auctions.Auctions.Where(c => (c.AuctionEndDateTime - DateTime.Now).TotalMinutes <= _queryConfig.MinutesToGo &&
+                                                                     c.CurrentBid <= _queryConfig.MaximumBid).ToList();
+
+            await _notifyService.NotifyAuctions(auctionsFinishingSoon);
         }
 
     }

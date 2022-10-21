@@ -1,4 +1,5 @@
-﻿using ExevopanNotification.Utils.Utils;
+﻿using ExevopanNotification.Domain.Enums;
+using ExevopanNotification.Utils.Utils;
 
 namespace ExevopanNotification.Domain.Entities
 {
@@ -12,7 +13,7 @@ namespace ExevopanNotification.Domain.Entities
         public bool HasBeenBidded { get; set; }
         public string OutfitId { get; set; }
         public int ServerId { get; set; }
-        public int VocationId { get; set; }
+        public VocationEnum VocationId { get; set; }
         public bool Sex { get; set; }
         public int Level { get; set; }
         public int AchievementPoints { get; set; }
@@ -20,7 +21,7 @@ namespace ExevopanNotification.Domain.Entities
         public int TcInvested { get; set; }
         public List<string> Tags { get; set; }
         public Skills Skills { get; set; }
-        public List<int> Items { get; set; }
+        public List<double> Items { get; set; }
         public List<string> Charms { get; set; }
         public bool Transfer { get; set; }
         public List<string> Imbuements { get; set; }

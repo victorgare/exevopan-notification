@@ -24,6 +24,11 @@ namespace ExevopanNotification.CrossCutting.Extensions
             services.AddScoped<IExevoPanService, ExevoPanService>();
             #endregion
 
+            #region Notifications
+            services.AddScoped<INotifyService, NotifyService>();
+            services.AddScoped<IAuctionNotification, TelegramService>();
+            #endregion
+
             return services;
         }
     }

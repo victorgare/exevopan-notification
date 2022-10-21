@@ -1,7 +1,7 @@
 
 using ExevopanNotification.CrossCutting.Extensions;
+using ExevopanNotification.Domain.Config;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 public class Program
@@ -9,6 +9,9 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        // configure app variables
+        builder.Services.Configure<ApplicationConfig>(builder.Configuration);
 
         // Add services to the container.
         ConfigureServices(builder.Services);
@@ -18,6 +21,9 @@ public class Program
 
         // configure HealthCheck
         builder.Services.AddCustomHealthCheck(builder.Configuration);
+
+        // configure hosted services
+        builder.Services.AddCustomHostedService();
 
         // disable model bind validation
         builder.Services.Configure<ApiBehaviorOptions>(options =>
