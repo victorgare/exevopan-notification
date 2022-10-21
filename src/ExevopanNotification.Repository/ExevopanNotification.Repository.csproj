@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ExevopanNotification.Utils\ExevopanNotification.Utils.csproj" />
+    <ProjectReference Include="..\ExevopanNotification.Utils\ExevopanNotification.Utils.csproj" />
     <ProjectReference Include="..\ExevopanNotification.ApplicationCore\ExevopanNotification.ApplicationCore.csproj" />
   </ItemGroup>
 
