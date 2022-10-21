@@ -2,7 +2,6 @@
 using ExevopanNotification.Domain.Config;
 using ExevopanNotification.Domain.Entities;
 using ExevopanNotification.Domain.Notifications;
-using ExevopanNotification.Utils.Utils;
 using Microsoft.Extensions.Options;
 using Telegram.Bot;
 

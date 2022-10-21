@@ -1,5 +1,6 @@
 ﻿using ExevopanNotification.Domain.Entities;
 using System.ComponentModel;
+using System.Globalization;
 using System.Text;
 using Telegram.Bot.Types.ReplyMarkups;
 
@@ -49,9 +50,10 @@ namespace ExevopanNotification.Domain.Notifications
 
         public override string ToString()
         {
+            var ptCulture = new CultureInfo("pt-BR");
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($@"{VocationIcon}{_auction.VocationId} [{_auction.Level}] - {_auction.Nickname}");
-            stringBuilder.AppendLine($@"🌎 {_auction.ServerData.ServerName} - 💰 {_auction.CurrentBid}");
+            stringBuilder.AppendLine($@"🌎 {_auction.ServerData.ServerName} - 💰 {_auction.CurrentBid.ToString("N", ptCulture)}");
             stringBuilder.AppendLine($@"🕛 {_auction.AuctionEndDateTime}");
             return stringBuilder.ToString();
         }
