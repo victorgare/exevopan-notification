@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExevopanNotification.Applic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExevopanNotification.Repository", "src\ExevopanNotification.Repository\ExevopanNotification.Repository.csproj", "{52F110F1-AF59-4710-B78D-21FD522CFF3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExevopanNotification.Utils", "ExevopanNotification.Utils\ExevopanNotification.Utils.csproj", "{065B273F-D797-4BB7-9074-2DCA2E5B9C63}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExevopanNotification.Utils", "src\ExevopanNotification.Utils\ExevopanNotification.Utils.csproj", "{065B273F-D797-4BB7-9074-2DCA2E5B9C63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
