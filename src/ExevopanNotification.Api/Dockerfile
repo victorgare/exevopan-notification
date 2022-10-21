@@ -7,14 +7,15 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["src/ExevopanNotification.Api/ExevopanNotification.Api.csproj", "ExevopanNotification.Api/"]
+COPY ["src/*", "src/"]
+
 RUN dotnet restore "src/ExevopanNotification.Api/ExevopanNotification.Api.csproj"
 COPY . .
-WORKDIR "/src/ExevopanNotification.Api"
+WORKDIR "/src/src/ExevopanNotification.Api"
 RUN dotnet build "ExevopanNotification.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "src/ExevopanNotification.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "ExevopanNotification.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
