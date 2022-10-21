@@ -13,7 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ExevopanNotification.CrossCutting\ExevopanNotification.CrossCutting.csproj" />
+	  <ProjectReference Include="..\ExevopanNotification.CrossCutting\ExevopanNotification.CrossCutting.csproj" />
 	</ItemGroup>
 
 	<PropertyGroup>
