@@ -9,11 +9,9 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["src/*", "src/"]
 
-RUN dir #Added
-
-RUN dotnet restore "ExevopanNotification.Api/ExevopanNotification.Api.csproj"
+RUN dotnet restore "src/ExevopanNotification.Api/ExevopanNotification.Api.csproj"
 COPY . .
-WORKDIR "/src/src/ExevopanNotification.Api"
+WORKDIR "/src/ExevopanNotification.Api"
 RUN dotnet build "ExevopanNotification.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
