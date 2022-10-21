@@ -14,7 +14,7 @@ namespace ExevopanNotification.CrossCutting.Extensions
             var sqlConnection = configuration.GetValue<string>("SqlConnectionString");
 
             healtCheckBuilder.AddUrlGroup(new Uri("https://www.exevopan.com/"), name: "Exevopan");
-            healtCheckBuilder.AddUrlGroup(new Uri("https://prod-auctions.service-exevopan.com/"), httpMethod: HttpMethod.Post, name: "Exevopan-backend");
+            //healtCheckBuilder.AddUrlGroup(new Uri("https://prod-auctions.service-exevopan.com/"), httpMethod: HttpMethod.Post, name: "Exevopan-backend");
             return services;
         }
 
