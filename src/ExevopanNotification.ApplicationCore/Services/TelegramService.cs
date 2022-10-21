@@ -14,6 +14,7 @@ namespace ExevopanNotification.ApplicationCore.Services
 
         public TelegramService(IOptions<ApplicationConfig> appConfig)
         {
+            Console.Write(appConfig);
             _telegramConfig = appConfig.Value.TelegramConfig;
             _telegramBotClient = new TelegramBotClient(_telegramConfig.Key);
         }
