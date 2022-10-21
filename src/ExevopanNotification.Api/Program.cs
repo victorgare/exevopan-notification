@@ -11,6 +11,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // configure app variables
+        builder.Configuration.AddEnvironmentVariables();
         builder.Services.Configure<ApplicationConfig>(builder.Configuration);
 
         // Add services to the container.
