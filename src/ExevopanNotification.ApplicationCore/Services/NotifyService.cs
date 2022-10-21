@@ -19,5 +19,19 @@ namespace ExevopanNotification.ApplicationCore.Services
                 await notification.Notify(auctions);
             }
         }
+
+        public async Task NotifyTelegram(string message)
+        {
+            var telegramService = _auctionNotifications.FirstOrDefault(c => c is TelegramService);
+
+            if (telegramService != null)
+            {
+                await telegramService.Notify(message);
+            }
+            else
+            {
+                throw new InvalidOperationException("No telegram service declared");
+            }
+        }
     }
 }

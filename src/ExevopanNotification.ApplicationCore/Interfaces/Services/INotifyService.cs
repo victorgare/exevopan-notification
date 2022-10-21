@@ -5,5 +5,6 @@ namespace ExevopanNotification.ApplicationCore.Interfaces.Services
     public interface INotifyService
     {
         Task NotifyAuctions(List<Auction> auctions);
+        Task NotifyTelegram(string message);
     }
 }

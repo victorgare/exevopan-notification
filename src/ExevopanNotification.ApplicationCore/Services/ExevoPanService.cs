@@ -4,6 +4,7 @@ using ExevopanNotification.Domain.Config;
 using ExevopanNotification.Domain.Entities;
 using ExevopanNotification.Domain.Enums;
 using Microsoft.Extensions.Options;
+using System.Text;
 
 namespace ExevopanNotification.ApplicationCore.Services
 {
@@ -22,6 +23,7 @@ namespace ExevopanNotification.ApplicationCore.Services
 
         public async Task FindAndNotify()
         {
+
             var auctionFilter = new AuctionFilter
             {
                 PaginationOptions = new PaginationOptions
@@ -50,6 +52,14 @@ namespace ExevopanNotification.ApplicationCore.Services
                                                                      c.CurrentBid <= _queryConfig.MaximumBid).ToList();
 
             await _notifyService.NotifyAuctions(auctionsFinishingSoon);
+
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(@$"Searched at {DateTime.Now}");
+            stringBuilder.AppendLine(@$"Founded {auctions.TotalItems}");
+            stringBuilder.AppendLine(@$"Founded in filter {auctionsFinishingSoon.Count}");
+
+            await _notifyService.NotifyTelegram(stringBuilder.ToString());
+
         }
 
     }

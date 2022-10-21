@@ -24,8 +24,12 @@ namespace ExevopanNotification.ApplicationCore.Services
             {
                 var telegramNotification = new TelegramAuctionNotification(auction);
                 await _telegramBotClient.SendTextMessageAsync(_telegramConfig.GroupId, telegramNotification.ToString(), replyMarkup: telegramNotification.GetInlineLinkButton());
-
             }
+        }
+
+        public async Task Notify(string message)
+        {
+            await _telegramBotClient.SendTextMessageAsync(_telegramConfig.GroupId, message);
         }
     }
 }
