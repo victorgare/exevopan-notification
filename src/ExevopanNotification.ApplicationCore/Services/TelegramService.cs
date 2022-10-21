@@ -2,6 +2,7 @@
 using ExevopanNotification.Domain.Config;
 using ExevopanNotification.Domain.Entities;
 using ExevopanNotification.Domain.Notifications;
+using ExevopanNotification.Utils.Utils;
 using Microsoft.Extensions.Options;
 using Telegram.Bot;
 
@@ -14,7 +15,7 @@ namespace ExevopanNotification.ApplicationCore.Services
 
         public TelegramService(IOptions<ApplicationConfig> appConfig)
         {
-            Console.Write(appConfig);
+            Console.Write(appConfig.ToJson());
             _telegramConfig = appConfig.Value.TelegramConfig;
             _telegramBotClient = new TelegramBotClient(_telegramConfig.Key);
         }
