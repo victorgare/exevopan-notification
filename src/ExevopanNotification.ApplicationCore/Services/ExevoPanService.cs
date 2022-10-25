@@ -4,7 +4,6 @@ using ExevopanNotification.Domain.Config;
 using ExevopanNotification.Domain.Entities;
 using ExevopanNotification.Domain.Enums;
 using Microsoft.Extensions.Options;
-using System.Text;
 
 namespace ExevopanNotification.ApplicationCore.Services
 {
@@ -40,7 +39,9 @@ namespace ExevopanNotification.ApplicationCore.Services
                 {
                     Vocation = new List<VocationEnum> { VocationEnum.Sorcerer, VocationEnum.Druid },
                     Pvp = new List<PvpEnum> { PvpEnum.Open, PvpEnum.RetroOpen, PvpEnum.RetroHardcore },
-                    MinLevel = 300
+                    MinLevel = 300,
+                    MaxLevel = 500,
+                    TransferAvailable = true
                 }
             };
 
@@ -50,16 +51,6 @@ namespace ExevopanNotification.ApplicationCore.Services
             // and price is less than `maximumBid`
             var auctionsFinishingSoon = auctions.Auctions.Where(c => (c.AuctionEndDateTime - DateTime.Now).TotalMinutes <= _queryConfig.MinutesToGo &&
                                                                      c.CurrentBid <= _queryConfig.MaximumBid).ToList();
-
-            await _notifyService.NotifyAuctions(auctionsFinishingSoon);
-
-            var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine(@$"Searched at {DateTime.Now}");
-            stringBuilder.AppendLine(@$"Founded {auctions.TotalItems}");
-            stringBuilder.AppendLine(@$"Founded in filter {auctionsFinishingSoon.Count}");
-
-            await _notifyService.NotifyTelegram(stringBuilder.ToString());
-
         }
 
     }

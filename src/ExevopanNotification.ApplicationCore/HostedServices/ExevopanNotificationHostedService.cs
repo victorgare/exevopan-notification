@@ -33,7 +33,7 @@ namespace ExevopanNotification.ApplicationCore.HostedServices
 
         private static TimeSpan GetInterval()
         {
-            return TimeSpan.FromMinutes(14);
+            return TimeSpan.FromMinutes(15);
         }
     }
 }
