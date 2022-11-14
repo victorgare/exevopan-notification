@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using static System.Net.Mime.MediaTypeNames;
@@ -44,6 +45,51 @@ namespace ExevopanNotification.Utils.Utils
         public static long ToUnixTimeSeconds(this DateTime date)
         {
             return ((DateTimeOffset)date).ToUnixTimeSeconds();
+        }
+
+        public static string ToQueryString(this object request, string separator = ",")
+        {
+            if (request == null)
+                throw new ArgumentNullException("request");
+
+            // Get all properties on the object
+            var properties = request.GetType().GetProperties()
+                .Where(x => x.CanRead)
+                .Where(x => x.GetValue(request, null) != null)
+                .ToDictionary(x => x.Name, x => x.GetValue(request, null));
+
+            // Get names for all IEnumerable properties (excl. string)
+            var propertyNames = properties
+                .Where(x => !(x.Value is string) && x.Value is IEnumerable)
+                .Select(x => x.Key)
+                .ToList();
+
+            // Concat all IEnumerable properties into a comma separated string
+            foreach (var key in propertyNames)
+            {
+                var valueType = properties[key].GetType();
+                var valueElemType = valueType.IsGenericType
+                                        ? valueType.GetGenericArguments()[0]
+                                        : valueType.GetElementType();
+                if (valueElemType.IsPrimitive || valueElemType == typeof(string))
+                {
+                    var enumerable = properties[key] as IEnumerable;
+                    properties[key] = string.Join(separator, enumerable.Cast<object>());
+                }
+
+                if (valueElemType.IsEnum)
+                {
+                    var enumerable = properties[key] as IEnumerable;
+                    var enumValues = enumerable.OfType<Enum>().ToList().Select(x => x.GetHashCode());
+                    properties[key] = string.Join(separator, enumValues);
+                }
+            }
+
+            // Concat all key/value pairs into a string separated by ampersand
+            return string.Join("&", properties
+                .Select(x => string.Concat(
+                    Uri.EscapeDataString(JsonNamingPolicy.CamelCase.ConvertName(x.Key)), "=",
+                    Uri.EscapeDataString(x.Value.ToString()))));
         }
     }
 }

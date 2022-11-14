@@ -25,24 +25,11 @@ namespace ExevopanNotification.ApplicationCore.Services
 
             var auctionFilter = new AuctionFilter
             {
-                PaginationOptions = new PaginationOptions
-                {
-                    PageIndex = 0,
-                    PageSize = 20
-                },
-                SortOptions = new SortOptions
-                {
-                    SortingMode = 0, // sorted by time
-                    DescendingOrder = false
-                },
-                FilterOptions = new FilterOptions
-                {
-                    Vocation = new List<VocationEnum> { VocationEnum.Sorcerer, VocationEnum.Druid },
-                    Pvp = new List<PvpEnum> { PvpEnum.Open, PvpEnum.RetroOpen, PvpEnum.RetroHardcore },
-                    MinLevel = 300,
-                    MaxLevel = 500,
-                    TransferAvailable = true
-                }
+                Vocation = new List<VocationEnum> { VocationEnum.Sorcerer, VocationEnum.Druid },
+                Pvp = new List<PvpEnum> { PvpEnum.Open, PvpEnum.RetroOpen, PvpEnum.RetroHardcore },
+                MinLevel = 300,
+                MaxLevel = 500,
+                TransferAvailable = true
             };
 
             var auctions = await _exevoPanRepository.GetCurrentAuctions(auctionFilter);

@@ -12,7 +12,7 @@ namespace ExevopanNotification.CrossCutting.Extensions
         public static IServiceCollection AddDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             #region HttpClients
-            services.AddHttpClient<ExevoPanRepository>(c => c.BaseAddress = new Uri("https://prod-auctions.service-exevopan.com"));
+            services.AddHttpClient<ExevoPanRepository>(c => c.BaseAddress = new Uri("https://www.exevopan.com/api/"));
             #endregion
 
             #region Repositories
