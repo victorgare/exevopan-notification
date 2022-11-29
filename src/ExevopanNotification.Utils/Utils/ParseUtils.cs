@@ -87,9 +87,19 @@ namespace ExevopanNotification.Utils.Utils
 
             // Concat all key/value pairs into a string separated by ampersand
             return string.Join("&", properties
-                .Select(x => string.Concat(
-                    Uri.EscapeDataString(JsonNamingPolicy.CamelCase.ConvertName(x.Key)), "=",
-                    Uri.EscapeDataString(x.Value.ToString()))));
+                .Select(x =>
+                {
+                    var value = x.Value?.ToString();
+                    switch (Type.GetTypeCode(x.Value?.GetType()))
+                    {
+                        case TypeCode.Boolean:
+                            value = value?.ToLower();
+                            break;
+
+                    }
+
+                    return string.Concat(Uri.EscapeDataString(JsonNamingPolicy.CamelCase.ConvertName(x.Key)), "=", Uri.EscapeDataString(value!));
+                }));
         }
     }
 }
