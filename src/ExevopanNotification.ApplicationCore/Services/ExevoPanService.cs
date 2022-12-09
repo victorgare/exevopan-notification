@@ -38,6 +38,8 @@ namespace ExevopanNotification.ApplicationCore.Services
             // and price is less than `maximumBid`
             var auctionsFinishingSoon = auctions.Auctions.Where(c => (c.AuctionEndDateTime - DateTime.Now).TotalMinutes <= _queryConfig.MinutesToGo &&
                                                                      c.CurrentBid <= _queryConfig.MaximumBid).ToList();
+
+            await _notifyService.NotifyAuctions(auctionsFinishingSoon);
         }
 
     }
