@@ -9,5 +9,6 @@ namespace ExevopanNotification.Domain.Entities
         public int MinLevel { get; set; } = 0!;
         public int MaxLevel { get; set; } = 4000!;
         public bool TransferAvailable { get; set; }
+        public int PageSize { get; set; } = 10;
     }
 }

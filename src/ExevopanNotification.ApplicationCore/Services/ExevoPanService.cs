@@ -22,14 +22,14 @@ namespace ExevopanNotification.ApplicationCore.Services
 
         public async Task FindAndNotify()
         {
-
             var auctionFilter = new AuctionFilter
             {
                 Vocation = new List<VocationEnum> { VocationEnum.Sorcerer, VocationEnum.Druid },
                 Pvp = new List<PvpEnum> { PvpEnum.Open, PvpEnum.RetroOpen, PvpEnum.RetroHardcore },
                 MinLevel = 300,
                 MaxLevel = 500,
-                TransferAvailable = true
+                TransferAvailable = true,
+                PageSize = 20
             };
 
             var auctions = await _exevoPanRepository.GetCurrentAuctions(auctionFilter);
