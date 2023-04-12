@@ -9,7 +9,7 @@ namespace ExevopanNotification.UnitTests.Domain.Notifications
     public class TelegramAuctionNotificationTests
     {
         [Fact]
-        public async void TelegramAuctionNotification_Should_Return_Notification()
+        public void TelegramAuctionNotification_Should_Return_Notification()
         {
             // arrange
             var auction = new Auction
@@ -26,8 +26,10 @@ namespace ExevopanNotification.UnitTests.Domain.Notifications
                 AuctionEnd = DateTime.Now.AddHours(1).ToUnixTimeSeconds()
             };
 
+            var trendPrice = 1000;
+
             // act
-            var telegramNotification = new TelegramAuctionNotification(auction);
+            var telegramNotification = new TelegramAuctionNotification(auction, trendPrice);
 
             // assert
             var inlineButton = telegramNotification.GetInlineLinkButton();
@@ -40,6 +42,7 @@ namespace ExevopanNotification.UnitTests.Domain.Notifications
             notificationMessage.Should().Contain(auction.Level.ToString());
             notificationMessage.Should().Contain(auction.ServerData.ServerName);
             notificationMessage.Should().Contain(auction.AuctionEndDateTime.ToString());
+            notificationMessage.Should().Contain(trendPrice.ToString());
 
             // formated expected bid number
             notificationMessage.Should().Contain("10.000");

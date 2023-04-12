@@ -10,5 +10,12 @@ namespace ExevopanNotification.Domain.Entities
         public int MaxLevel { get; set; } = 4000!;
         public bool TransferAvailable { get; set; }
         public int PageSize { get; set; } = 10;
+
+        public bool? BiddedOnly { get; set; }
+        public bool? History { get; set; }
+        public bool? Descending { get; set; }
+
+
+        public List<bool>? Battleye { get; set; }
     }
 }

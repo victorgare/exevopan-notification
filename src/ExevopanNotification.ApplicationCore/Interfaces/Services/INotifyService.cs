@@ -1,10 +1,10 @@
-﻿using ExevopanNotification.Domain.Entities;
+﻿using ExevopanNotification.Domain.Notifications;
 
 namespace ExevopanNotification.ApplicationCore.Interfaces.Services
 {
     public interface INotifyService
     {
-        Task NotifyAuctions(List<Auction> auctions);
+        Task NotifyAuctions(List<AuctionNotification> auctionsNotifications);
         Task NotifyTelegram(string message);
     }
 }

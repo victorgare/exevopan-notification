@@ -73,8 +73,20 @@ namespace ExevopanNotification.Utils.Utils
                                         : valueType.GetElementType();
                 if (valueElemType.IsPrimitive || valueElemType == typeof(string))
                 {
-                    var enumerable = properties[key] as IEnumerable;
-                    properties[key] = string.Join(separator, enumerable.Cast<object>());
+                    switch (Type.GetTypeCode(valueElemType))
+                    {
+                        case TypeCode.Boolean:
+                            var boolEnumarable = properties[key] as IEnumerable<bool>;
+                            var valuesArray = boolEnumarable.Select(c => c.ToString().ToLower()).ToArray();
+                            properties[key] = string.Join(separator, valuesArray);
+                            break;
+
+                        default:
+                            var enumerable = properties[key] as IEnumerable;
+                            properties[key] = string.Join(separator, enumerable.Cast<object>());
+                            break;
+                    }
+
                 }
 
                 if (valueElemType.IsEnum)

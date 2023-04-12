@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using ExevopanNotification.Domain.Enums;
+using System.Text.Json.Serialization;
 
 namespace ExevopanNotification.Domain.Entities
 {
@@ -6,6 +7,6 @@ namespace ExevopanNotification.Domain.Entities
     {
         [JsonPropertyName("string")]
         public string Description { get; set; }
-        public int Type { get; set; }
+        public PvpEnum Type { get; set; }
     }
 }

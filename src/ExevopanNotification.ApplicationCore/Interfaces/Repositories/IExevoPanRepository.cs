@@ -4,6 +4,6 @@ namespace ExevopanNotification.ApplicationCore.Interfaces.Repositories
 {
     public interface IExevoPanRepository
     {
-        Task<AuctionResponse> GetCurrentAuctions(AuctionFilter auctionFilter);
+        Task<AuctionResponse> GetAuctions(AuctionFilter auctionFilter);
     }
 }

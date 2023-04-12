@@ -1,6 +1,5 @@
 ﻿using ExevopanNotification.ApplicationCore.Interfaces.Services;
 using ExevopanNotification.Domain.Config;
-using ExevopanNotification.Domain.Entities;
 using ExevopanNotification.Domain.Notifications;
 using Microsoft.Extensions.Options;
 using Telegram.Bot;
@@ -18,11 +17,11 @@ namespace ExevopanNotification.ApplicationCore.Services
             _telegramBotClient = new TelegramBotClient(_telegramConfig.Key);
         }
 
-        public async Task Notify(List<Auction> auctions)
+        public async Task Notify(List<AuctionNotification> auctionsNotifications)
         {
-            foreach (var auction in auctions)
+            foreach (var auctionNotification in auctionsNotifications)
             {
-                var telegramNotification = new TelegramAuctionNotification(auction);
+                var telegramNotification = new TelegramAuctionNotification(auctionNotification.Auction, auctionNotification.PriceTrend);
                 await _telegramBotClient.SendTextMessageAsync(_telegramConfig.GroupId, telegramNotification.ToString(), replyMarkup: telegramNotification.GetInlineLinkButton());
             }
         }

@@ -1,5 +1,5 @@
 ﻿using ExevopanNotification.ApplicationCore.Interfaces.Services;
-using ExevopanNotification.Domain.Entities;
+using ExevopanNotification.Domain.Notifications;
 
 namespace ExevopanNotification.ApplicationCore.Services
 {
@@ -12,11 +12,11 @@ namespace ExevopanNotification.ApplicationCore.Services
             _auctionNotifications = auctionNotifications;
         }
 
-        public async Task NotifyAuctions(List<Auction> auctions)
+        public async Task NotifyAuctions(List<AuctionNotification> auctionsNotifications)
         {
             foreach (var notification in _auctionNotifications)
             {
-                await notification.Notify(auctions);
+                await notification.Notify(auctionsNotifications);
             }
         }
 
