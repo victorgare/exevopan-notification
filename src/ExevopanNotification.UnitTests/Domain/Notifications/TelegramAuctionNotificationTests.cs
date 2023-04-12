@@ -42,10 +42,12 @@ namespace ExevopanNotification.UnitTests.Domain.Notifications
             notificationMessage.Should().Contain(auction.Level.ToString());
             notificationMessage.Should().Contain(auction.ServerData.ServerName);
             notificationMessage.Should().Contain(auction.AuctionEndDateTime.ToString());
-            notificationMessage.Should().Contain(trendPrice.ToString());
 
             // formated expected bid number
             notificationMessage.Should().Contain("10.000");
+
+            // formated expected trand value
+            notificationMessage.Should().Contain("1.000");
 
         }
     }
