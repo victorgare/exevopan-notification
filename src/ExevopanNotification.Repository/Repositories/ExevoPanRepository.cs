@@ -13,7 +13,7 @@ namespace ExevopanNotification.Repository.Repositories
             _httpClient = httpClientFactory.CreateClient(nameof(ExevoPanRepository));
         }
 
-        public async Task<AuctionResponse> GetCurrentAuctions(AuctionFilter auctionFilter)
+        public async Task<AuctionResponse> GetAuctions(AuctionFilter auctionFilter)
         {
             var qs = auctionFilter.ToQueryString();
             var response = await _httpClient.GetAsync($"auctions?{qs}");
