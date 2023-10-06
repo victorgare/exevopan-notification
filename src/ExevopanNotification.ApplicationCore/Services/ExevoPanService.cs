@@ -32,7 +32,7 @@ namespace ExevopanNotification.ApplicationCore.Services
                 MinLevel = 300,
                 MaxLevel = 500,
                 TransferAvailable = true,
-                PageSize = 20
+                PageSize = 30
             };
 
             var auctions = await _exevoPanRepository.GetAuctions(auctionFilter);
@@ -42,7 +42,7 @@ namespace ExevopanNotification.ApplicationCore.Services
             var auctionsFinishingSoon = auctions.Auctions.Where(c => (c.AuctionEndDateTime - DateTime.Now).TotalMinutes <= _queryConfig.MinutesToGo &&
                                                                      c.CurrentBid <= _queryConfig.MaximumBid).ToList();
 
-            var filterLimits = GetFilterLimit(auctionFilter.MinLevel, auctionFilter.MaxLevel);
+            var filterLimits = FilterLimits.Create(auctionFilter.MinLevel, auctionFilter.MaxLevel);
             var auctionNotifications = await PriceTrend(auctionsFinishingSoon, filterLimits);
 
             await _notifyService.NotifyAuctions(auctionNotifications);
@@ -67,11 +67,6 @@ namespace ExevopanNotification.ApplicationCore.Services
             }
 
             return returnList;
-        }
-
-        static FilterLimits GetFilterLimit(int minLevel, int maxLevel)
-        {
-            return new FilterLimits(minLevel, maxLevel);
         }
     }
 }

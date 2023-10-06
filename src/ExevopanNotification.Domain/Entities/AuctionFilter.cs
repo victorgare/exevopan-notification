@@ -4,6 +4,7 @@ namespace ExevopanNotification.Domain.Entities
 {
     public class AuctionFilter
     {
+        public string? NicknameFilter { get; set; }
         public List<VocationEnum>? Vocation { get; set; }
         public List<PvpEnum>? Pvp { get; set; }
         public int MinLevel { get; set; } = 0!;

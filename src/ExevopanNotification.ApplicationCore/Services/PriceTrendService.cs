@@ -36,6 +36,27 @@ namespace ExevopanNotification.ApplicationCore.Services
 
             return await Analyze(filter);
         }
+        public async Task<int> Analyze(string characterName, bool history, FilterLimits filterLimits)
+        {
+            var auction = (await _exevoPanRepository.GetAuctions(new AuctionFilter
+            {
+                NicknameFilter = characterName,
+                History = history,
+                Descending = history
+            })).Auctions.FirstOrDefault();
+
+            if (auction == null)
+            {
+                return 0;
+            }
+
+            var minLevel = GetMinLevel(auction.Level, filterLimits.MinLevel);
+            var maxLevel = GetMaxLevel(auction.Level, filterLimits.MaxLevel);
+
+            var filter = GetPriceTrendFilter(minLevel, maxLevel, auction);
+
+            return await Analyze(filter);
+        }
 
         private async Task<int> Analyze(AuctionFilter filter)
         {
@@ -100,5 +121,6 @@ namespace ExevopanNotification.ApplicationCore.Services
                 PageSize = PageSize,
             };
         }
+
     }
 }
