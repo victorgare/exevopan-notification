@@ -34,6 +34,9 @@ public class Program
 
         var app = builder.Build();
 
+        // add shutdown handler
+        app.UseCustomShutdownHandler();
+
         // use custom swagger
         app.UseCustomSwagger();
 

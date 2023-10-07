@@ -26,8 +26,8 @@ namespace ExevopanNotification.CrossCutting.Extensions
             #endregion
 
             #region Notifications
-            services.AddScoped<INotifyService, NotifyService>();
-            services.AddScoped<IAuctionNotification, TelegramService>();
+            services.AddSingleton<INotifyService, NotifyService>();
+            services.AddSingleton<IAuctionNotification, TelegramService>();
             #endregion
 
             return services;
