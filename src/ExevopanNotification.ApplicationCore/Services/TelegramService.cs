@@ -28,7 +28,7 @@ namespace ExevopanNotification.ApplicationCore.Services
 
         public async Task Notify(string message)
         {
-            await _telegramBotClient.SendTextMessageAsync(_telegramConfig.GroupId, message);
+            await _telegramBotClient.SendTextMessageAsync(_telegramConfig.GroupId, message, allowSendingWithoutReply: true);
         }
     }
 }
