@@ -6,5 +6,6 @@ namespace ExevopanNotification.ApplicationCore.Interfaces.Services
     {
         Task NotifyAuctions(List<AuctionNotification> auctionsNotifications);
         Task NotifyTelegram(string message);
+        Task NotifyRuleBreaker(List<AuctionNotification> auctionsNotifications);
     }
 }

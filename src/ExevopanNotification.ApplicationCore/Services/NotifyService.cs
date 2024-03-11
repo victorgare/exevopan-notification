@@ -20,6 +20,14 @@ namespace ExevopanNotification.ApplicationCore.Services
             }
         }
 
+        public async Task NotifyRuleBreaker(List<AuctionNotification> auctionsNotifications)
+        {
+            foreach (var notification in _auctionNotifications)
+            {
+                await notification.NotifyRuleBreaker(auctionsNotifications);
+            }
+        }
+
         public async Task NotifyTelegram(string message)
         {
             var telegramService = _auctionNotifications.FirstOrDefault(c => c is TelegramService);
