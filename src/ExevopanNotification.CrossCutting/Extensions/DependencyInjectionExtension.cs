@@ -23,6 +23,7 @@ namespace ExevopanNotification.CrossCutting.Extensions
             #region Services
             services.AddScoped<IExevoPanService, ExevoPanService>();
             services.AddScoped<IPriceTrendService, PriceTrendService>();
+            services.AddScoped<IRuleBreakerService, RuleBreakerService>();
             #endregion
 
             #region Notifications

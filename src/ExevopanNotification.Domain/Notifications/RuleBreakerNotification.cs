@@ -6,15 +6,12 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace ExevopanNotification.Domain.Notifications
 {
-    public class TelegramAuctionNotification : AuctionBaseNotification
+    public class RuleBreakerNotification : AuctionBaseNotification
     {
-        private readonly int _priceTrend;
 
-        public TelegramAuctionNotification(Auction auction, int priceTrend) : base(auction)
+        public RuleBreakerNotification(Auction auction) : base(auction)
         {
-            _priceTrend = priceTrend;
         }
-
         public InlineKeyboardMarkup GetInlineLinkButton()
         {
             // auction link
@@ -31,7 +28,6 @@ namespace ExevopanNotification.Domain.Notifications
             stringBuilder.AppendLine($@"{VocationIcon}{_auction.VocationId} [{_auction.Level}] - {_auction.Nickname}");
             stringBuilder.AppendLine($@"🌎 {_auction.ServerData.ServerName} - 💰 {_auction.CurrentBid.ToString("N0", ptCulture)}");
             stringBuilder.AppendLine($@"🕛 {_auction.AuctionEndDateTime}");
-            stringBuilder.AppendLine($@"📈 {_priceTrend.ToString("N0", ptCulture)}");
             return stringBuilder.ToString();
         }
     }

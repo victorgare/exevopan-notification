@@ -1,4 +1,5 @@
-﻿using ExevopanNotification.Domain.Enums;
+﻿using ExevopanNotification.Domain.Constants;
+using ExevopanNotification.Domain.Enums;
 
 namespace ExevopanNotification.Domain.Entities
 {
@@ -18,5 +19,6 @@ namespace ExevopanNotification.Domain.Entities
 
 
         public List<bool>? Battleye { get; set; }
+        public List<string>? ServerSet { get; set; }
     }
 }
