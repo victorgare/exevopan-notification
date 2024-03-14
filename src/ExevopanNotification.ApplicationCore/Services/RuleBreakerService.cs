@@ -23,7 +23,7 @@ namespace ExevopanNotification.ApplicationCore.Services
             {
                 MinLevel = 400,
                 PageSize = 30,
-                ServerSet = new List<string> { ServersConstant.Obscubra, ServersConstant.Jacabra }
+                ServerSet = [ServersConstant.Obscubra, ServersConstant.Jacabra]
             };
 
             var auctions = await _exevoPanRepository.GetAuctions(auctionFilter);

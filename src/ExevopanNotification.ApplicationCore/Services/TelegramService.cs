@@ -2,6 +2,7 @@
 using ExevopanNotification.Domain.Config;
 using ExevopanNotification.Domain.Notifications;
 using Microsoft.Extensions.Options;
+using System.Text;
 using Telegram.Bot;
 
 namespace ExevopanNotification.ApplicationCore.Services
@@ -27,11 +28,14 @@ namespace ExevopanNotification.ApplicationCore.Services
         }
         public async Task NotifyRuleBreaker(List<AuctionNotification> auctionsNotifications)
         {
+            var message = new StringBuilder();
             foreach (var auctionNotification in auctionsNotifications)
             {
                 var telegramNotification = new RuleBreakerNotification(auctionNotification.Auction);
-                await _telegramBotClient.SendTextMessageAsync(_telegramConfig.RuleBreakerGroupId, telegramNotification.ToString(), replyMarkup: telegramNotification.GetInlineLinkButton());
+                message.AppendLine(telegramNotification.ToString());
             }
+
+            await _telegramBotClient.SendTextMessageAsync(_telegramConfig.RuleBreakerGroupId, message.ToString(), allowSendingWithoutReply: true);
         }
 
         public async Task Notify(string message)
