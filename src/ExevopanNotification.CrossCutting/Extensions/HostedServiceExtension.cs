@@ -8,7 +8,6 @@ namespace ExevopanNotification.CrossCutting.Extensions
         public static IServiceCollection AddCustomHostedService(this IServiceCollection services)
         {
             services.AddHostedService<ExevopanNotificationHostedService>();
-            services.AddHostedService<RuleBreakerNotificationHostedService>();
             return services;
         }
     }
