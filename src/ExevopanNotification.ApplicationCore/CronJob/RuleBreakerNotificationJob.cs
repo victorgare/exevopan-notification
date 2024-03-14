@@ -4,11 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ExevopanNotification.ApplicationCore.CronJob
 {
-    public class RuleBreakerNotificationCronJob : CronJobService
+    public class RuleBreakerNotificationJob : CronJobService
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public RuleBreakerNotificationCronJob(IScheduleConfig<RuleBreakerNotificationCronJob> config, IServiceScopeFactory serviceScopeFactory) : base(config.CronExpression, config.TimeZoneInfo)
+        public RuleBreakerNotificationJob(IScheduleConfig<RuleBreakerNotificationJob> config, IServiceScopeFactory serviceScopeFactory) : base(config.CronExpression, config.TimeZoneInfo)
         {
             _serviceScopeFactory = serviceScopeFactory;
         }

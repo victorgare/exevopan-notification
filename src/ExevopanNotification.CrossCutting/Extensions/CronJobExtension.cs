@@ -8,12 +8,20 @@ namespace ExevopanNotification.CrossCutting.Extensions
     {
         public static IServiceCollection AddCustomCronJob(this IServiceCollection services)
         {
-            services.AddCronJob<RuleBreakerNotificationCronJob>(c =>
+            services.AddCronJob<RuleBreakerNotificationJob>(c =>
             {
                 c.TimeZoneInfo = TimeZoneInfo.Utc;
 
                 // every day at 10h
                 c.CronExpression = "0 10 * * *";
+            });
+
+            services.AddCronJob<ExevopanNotificationJob>(c =>
+            {
+                c.TimeZoneInfo = TimeZoneInfo.Utc;
+
+                // every 15 minutes
+                c.CronExpression = "*/15 * * * *";
             });
 
             return services;

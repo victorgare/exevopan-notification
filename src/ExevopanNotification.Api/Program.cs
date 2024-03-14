@@ -23,8 +23,8 @@ public class Program
         // configure HealthCheck
         builder.Services.AddCustomHealthCheck(builder.Configuration);
 
-        // configure hosted services
-        builder.Services.AddCustomHostedService();
+        // configure cron jobs
+        builder.Services.AddCustomCronJob();
 
         // disable model bind validation
         builder.Services.Configure<ApiBehaviorOptions>(options =>
