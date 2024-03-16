@@ -32,6 +32,7 @@ public class Program
             options.SuppressModelStateInvalidFilter = true;
         });
 
+        builder.Services.AddMemoryCache();
         var app = builder.Build();
 
         // add shutdown handler
