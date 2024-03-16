@@ -14,7 +14,7 @@ namespace ExevopanNotification.Domain.Notifications
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine($@"{VocationIcon}{_auction.VocationId} [{_auction.Level}] - {_auction.Nickname}");
+            stringBuilder.AppendLine($@" - {VocationIcon}{_auction.VocationId} [{_auction.Level}] - {_auction.Nickname}");
             return stringBuilder.ToString();
         }
     }
