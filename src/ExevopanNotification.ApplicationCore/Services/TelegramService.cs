@@ -1,10 +1,12 @@
 ﻿using ExevopanNotification.ApplicationCore.Interfaces.Services;
 using ExevopanNotification.Domain.Config;
 using ExevopanNotification.Domain.Notifications;
+using ExevopanNotification.Utils.Utils;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using System.Text;
 using Telegram.Bot;
+using Telegram.Bot.Types.Enums;
 
 namespace ExevopanNotification.ApplicationCore.Services
 {
@@ -58,25 +60,23 @@ namespace ExevopanNotification.ApplicationCore.Services
             }
 
             var message = new StringBuilder()
-                .AppendLine("**NOVOS LEILOES**")
-                .AppendLine(newAuction.ToString())
-                .AppendLine("**FINALIZADOS**")
-                .AppendLine(string.Join(Environment.NewLine, lastMessage))
-                .AppendLine("**CONTINUAM**")
-                .AppendLine(currentAuction.ToString());
+                .Add("NOVOS LEILOES".ToBold(), newAuction)
+                .Add("FINALIZADOS".ToBold(), string.Join(Environment.NewLine, lastMessage))
+                .Add("CONTINUAM".ToBold(), currentAuction);
 
             SetLastMessage(_telegramConfig.RuleBreakerGroupId, auctionsNotifications.Select(c => c.Auction.Nickname).ToArray());
 
             await _telegramBotClient.SendTextMessageAsync(
-                chatId: _telegramConfig.RuleBreakerGroupId,
+                chatId: _telegramConfig.GroupId,
                 text: message.ToString(),
-                allowSendingWithoutReply: true);
+                allowSendingWithoutReply: true,
+                parseMode: ParseMode.Markdown);
         }
 
         public async Task Notify(string message)
         {
             await _telegramBotClient.SendTextMessageAsync(
-                chatId: _telegramConfig.GroupId,
+                chatId: _telegramConfig.RuleBreakerGroupId,
                 text: message,
                 allowSendingWithoutReply: true);
         }
@@ -98,6 +98,38 @@ namespace ExevopanNotification.ApplicationCore.Services
             }
 
             return default;
+        }
+
+
+    }
+
+    internal static class ExtensionHelper
+    {
+        internal static StringBuilder Add(this StringBuilder sb, string label, StringBuilder value)
+        {
+            if (value.Length > 0)
+            {
+                sb.AddLines(label, value.ToString());
+            }
+
+            return sb;
+        }
+
+        internal static StringBuilder Add(this StringBuilder sb, string label, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                sb.AddLines(label, value);
+            }
+
+            return sb;
+        }
+
+        private static StringBuilder AddLines(this StringBuilder sb, string label, string value)
+        {
+            return sb.AppendLine(label)
+                  .AppendLine(value.ToString())
+                  .AppendLine(Environment.NewLine);
         }
     }
 }
