@@ -15,11 +15,14 @@ namespace ExevopanNotification.ApplicationCore.Services
         private readonly TelegramBotClient _telegramBotClient;
         private readonly TelegramConfig _telegramConfig;
         private readonly IMemoryCache _memoryCache;
+        private readonly IMemoryCache _memoryCache;
 
+        public TelegramService(IOptions<ApplicationConfig> appConfig, IMemoryCache memoryCache)
         public TelegramService(IOptions<ApplicationConfig> appConfig, IMemoryCache memoryCache)
         {
             _telegramConfig = appConfig.Value.TelegramConfig;
             _telegramBotClient = new TelegramBotClient(_telegramConfig.Key);
+            _memoryCache = memoryCache;
             _memoryCache = memoryCache;
         }
 
@@ -32,10 +35,19 @@ namespace ExevopanNotification.ApplicationCore.Services
                     chatId: _telegramConfig.GroupId,
                     text: telegramNotification.ToString(),
                     replyMarkup: telegramNotification.GetInlineLinkButton());
+                await _telegramBotClient.SendTextMessageAsync(
+                    chatId: _telegramConfig.GroupId,
+                    text: telegramNotification.ToString(),
+                    replyMarkup: telegramNotification.GetInlineLinkButton());
             }
         }
         public async Task NotifyRuleBreaker(List<AuctionNotification> auctionsNotifications)
         {
+            var newAuction = new StringBuilder();
+            var currentAuction = new StringBuilder();
+
+            var lastMessage = GetLastMessage<string[]>(_telegramConfig.RuleBreakerGroupId) ?? [];
+
             var newAuction = new StringBuilder();
             var currentAuction = new StringBuilder();
 
