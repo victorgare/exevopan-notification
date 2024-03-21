@@ -27,8 +27,8 @@ namespace ExevopanNotification.ApplicationCore.Services
         {
             var auctionFilter = new AuctionFilter
             {
-                Vocation = new List<VocationEnum> { VocationEnum.Sorcerer, VocationEnum.Druid },
-                Pvp = new List<PvpEnum> { PvpEnum.Open, PvpEnum.RetroOpen, PvpEnum.RetroHardcore },
+                Vocation = [VocationEnum.Sorcerer, VocationEnum.Druid],
+                Pvp = [PvpEnum.Open, PvpEnum.RetroOpen, PvpEnum.RetroHardcore],
                 MinLevel = 300,
                 MaxLevel = 500,
                 TransferAvailable = true,
