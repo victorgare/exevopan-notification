@@ -33,10 +33,6 @@ namespace ExevopanNotification.ApplicationCore.Services
                     chatId: _telegramConfig.GroupId,
                     text: telegramNotification.ToString(),
                     replyMarkup: telegramNotification.GetInlineLinkButton());
-                await _telegramBotClient.SendTextMessageAsync(
-                    chatId: _telegramConfig.GroupId,
-                    text: telegramNotification.ToString(),
-                    replyMarkup: telegramNotification.GetInlineLinkButton());
             }
         }
         public async Task NotifyRuleBreaker(List<AuctionNotification> auctionsNotifications)
