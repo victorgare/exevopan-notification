@@ -8,7 +8,7 @@ namespace ExevopanNotification.ApplicationCore.CronJob
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public ExevopanNotificationJob(IScheduleConfig<RuleBreakerNotificationJob> config, IServiceScopeFactory serviceScopeFactory) : base(config.CronExpression, config.TimeZoneInfo)
+        public ExevopanNotificationJob(IScheduleConfig<ExevopanNotificationJob> config, IServiceScopeFactory serviceScopeFactory) : base(config.CronExpression, config.TimeZoneInfo)
         {
             _serviceScopeFactory = serviceScopeFactory;
         }
