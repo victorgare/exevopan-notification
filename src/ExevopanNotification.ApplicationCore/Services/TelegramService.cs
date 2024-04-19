@@ -39,39 +39,46 @@ namespace ExevopanNotification.ApplicationCore.Services
         {
             var newAuction = new StringBuilder();
             var currentAuction = new StringBuilder();
+            var servers = auctionsNotifications.Select(c => c.Auction.ServerData.ServerName).Distinct().ToArray();
 
-            var lastMessage = GetLastMessage<string[]>(_telegramConfig.RuleBreakerGroupId) ?? [];
-
-            foreach (var auctionNotification in auctionsNotifications)
+            foreach (var server in servers)
             {
-                var telegramNotification = new RuleBreakerNotification(auctionNotification.Auction);
+                var lastMessage = GetLastMessage<string[]>(_telegramConfig.RuleBreakerGroupId, server) ?? [];
+                var serverAuctionNotifications = auctionsNotifications.Where(c => c.Auction.ServerData.ServerName == server);
 
-                var nickName = auctionNotification.Auction.Nickname;
+                foreach (var auctionNotification in serverAuctionNotifications)
+                {
+                    var telegramNotification = new RuleBreakerNotification(auctionNotification.Auction);
 
-                if (lastMessage.Contains(nickName))
-                {
-                    currentAuction.AppendLine(telegramNotification.ToString());
-                    // remove element from array
-                    lastMessage = lastMessage.Where(c => !c.Contains(nickName)).ToArray();
+                    var nickName = auctionNotification.Auction.Nickname;
+
+                    if (lastMessage.Contains(nickName))
+                    {
+                        currentAuction.AppendLine(telegramNotification.ToString());
+                        // remove element from array
+                        lastMessage = lastMessage.Where(c => !c.Contains(nickName)).ToArray();
+                    }
+                    else
+                    {
+                        newAuction.AppendLine(telegramNotification.ToString());
+                    }
                 }
-                else
-                {
-                    newAuction.AppendLine(telegramNotification.ToString());
-                }
+
+                var message = new StringBuilder()
+                    .AppendLine(server.ToBold())
+                    .Add("NOVOS LEILOES".ToBold(), newAuction)
+                    .Add("FINALIZADOS".ToBold(), string.Join(Environment.NewLine, lastMessage))
+                    .Add("CONTINUAM".ToBold(), currentAuction);
+
+                SetLastMessage(_telegramConfig.RuleBreakerGroupId, server, serverAuctionNotifications.Select(c => c.Auction.Nickname).ToArray());
+
+                await _telegramBotClient.SendTextMessageAsync(
+                    chatId: _telegramConfig.RuleBreakerGroupId,
+                    text: message.ToString(),
+                    allowSendingWithoutReply: true,
+                    parseMode: ParseMode.Markdown);
             }
 
-            var message = new StringBuilder()
-                .Add("NOVOS LEILOES".ToBold(), newAuction)
-                .Add("FINALIZADOS".ToBold(), string.Join(Environment.NewLine, lastMessage))
-                .Add("CONTINUAM".ToBold(), currentAuction);
-
-            SetLastMessage(_telegramConfig.RuleBreakerGroupId, auctionsNotifications.Select(c => c.Auction.Nickname).ToArray());
-
-            await _telegramBotClient.SendTextMessageAsync(
-                chatId: _telegramConfig.RuleBreakerGroupId,
-                text: message.ToString(),
-                allowSendingWithoutReply: true,
-                parseMode: ParseMode.Markdown);
         }
 
         public async Task Notify(string message)
@@ -82,18 +89,18 @@ namespace ExevopanNotification.ApplicationCore.Services
                 allowSendingWithoutReply: true);
         }
 
-        private void SetLastMessage<T>(string groupId, T message)
+        private void SetLastMessage<T>(string groupId, string serverName, T message)
         {
             var cacheOptions = new MemoryCacheEntryOptions
             {
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1)
             };
 
-            _memoryCache.Set(groupId, message, cacheOptions);
+            _memoryCache.Set($"{groupId}-{serverName}", message, cacheOptions);
         }
-        private T? GetLastMessage<T>(string groupId)
+        private T? GetLastMessage<T>(string groupId, string serverName)
         {
-            if (_memoryCache.TryGetValue(groupId, out T data))
+            if (_memoryCache.TryGetValue($"{groupId}-{serverName}", out T data))
             {
                 return data;
             }
