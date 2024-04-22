@@ -37,12 +37,12 @@ namespace ExevopanNotification.ApplicationCore.Services
         }
         public async Task NotifyRuleBreaker(List<AuctionNotification> auctionsNotifications)
         {
-            var newAuction = new StringBuilder();
-            var currentAuction = new StringBuilder();
             var servers = auctionsNotifications.Select(c => c.Auction.ServerData.ServerName).Distinct().ToArray();
 
             foreach (var server in servers)
             {
+                var newAuction = new StringBuilder();
+                var currentAuction = new StringBuilder();
                 var lastMessage = GetLastMessage<string[]>(_telegramConfig.RuleBreakerGroupId, server) ?? [];
                 var serverAuctionNotifications = auctionsNotifications.Where(c => c.Auction.ServerData.ServerName == server);
 
