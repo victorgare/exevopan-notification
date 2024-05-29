@@ -4,5 +4,6 @@
     {
         string CronExpression { get; set; }
         TimeZoneInfo TimeZoneInfo { get; set; }
+        bool Enabled { get; set; }
     }
 }

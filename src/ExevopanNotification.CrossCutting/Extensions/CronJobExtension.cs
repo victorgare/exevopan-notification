@@ -14,6 +14,7 @@ namespace ExevopanNotification.CrossCutting.Extensions
 
                 // every day at 10h
                 c.CronExpression = "0 10 * * *";
+                c.Enabled = false;
             });
 
             services.AddCronJob<ExevopanNotificationJob>(c =>
@@ -39,8 +40,11 @@ namespace ExevopanNotification.CrossCutting.Extensions
                 throw new ArgumentNullException(nameof(options), "Empty Cron Expression is not allowed.");
             }
 
-            services.AddSingleton<IScheduleConfig<T>>(config);
-            services.AddHostedService<T>();
+            if (config.Enabled)
+            {
+                services.AddSingleton<IScheduleConfig<T>>(config);
+                services.AddHostedService<T>();
+            }
             return services;
         }
     }
