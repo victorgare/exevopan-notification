@@ -4,5 +4,6 @@
     {
         public string CronExpression { get; set; } = string.Empty;
         public TimeZoneInfo TimeZoneInfo { get; set; } = TimeZoneInfo.Local;
+        public bool Enabled { get; set; } = true;
     }
 }
