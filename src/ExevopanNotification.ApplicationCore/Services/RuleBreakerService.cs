@@ -21,8 +21,8 @@ namespace ExevopanNotification.ApplicationCore.Services
         {
             var auctionFilter = new AuctionFilter
             {
-                MinLevel = 400,
-                PageSize = 30,
+                MinLevel = 45,
+                PageSize = 100,
                 ServerSet = [ServersConstant.Obscubra, ServersConstant.Jacabra]
             };
 
