@@ -33,6 +33,7 @@ namespace ExevopanNotification.ApplicationCore.Services
                 {
                     Auction = c
                 })
+                .OrderByDescending(c => c.Auction.Level)
                 .ToList();
 
             await _notifyService.NotifyRuleBreaker(notify);
