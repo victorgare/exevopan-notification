@@ -14,6 +14,7 @@ namespace ExevopanNotification.CrossCutting.Extensions
 
                 // every day at 10h
                 c.CronExpression = "0 10 * * *";
+                c.Enabled = false;
             });
 
             services.AddCronJob<ExevopanNotificationJob>(c =>
