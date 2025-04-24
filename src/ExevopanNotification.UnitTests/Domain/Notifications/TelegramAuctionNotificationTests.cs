@@ -50,5 +50,28 @@ namespace ExevopanNotification.UnitTests.Domain.Notifications
             notificationMessage.Should().Contain("1.000");
 
         }
+
+        [Fact]
+        public void ShouldCalculatePricePerMillion()
+        {
+            // arrange
+            var auction = new Auction
+            {
+                CurrentBid = 3000,
+                Level = 350,
+                ServerData = new ServerData
+                {
+                    ServerName = "Server1"
+                },
+            };
+            
+            // act
+            var telegramNotification = new TelegramAuctionNotification(auction, 0);
+
+            // assert
+            var notificationMessage = telegramNotification.ToString();
+            notificationMessage.Should().Contain("(4,27tc/kk)");
+
+        }
     }
 }

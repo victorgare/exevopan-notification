@@ -23,6 +23,16 @@ namespace ExevopanNotification.CrossCutting.Extensions
 
                 // every 15 minutes
                 c.CronExpression = "*/15 * * * *";
+                c.Enabled = false;
+            });
+
+
+            services.AddCronJob<HardcoreNotificationJob>(c =>
+            {
+                c.TimeZoneInfo = TimeZoneInfo.Utc;
+
+                // every day at 10h
+                c.CronExpression = "0 10 * * *";
             });
 
             return services;

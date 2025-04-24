@@ -24,12 +24,28 @@ namespace ExevopanNotification.Domain.Notifications
             return new InlineKeyboardMarkup(auctionLinkButton);
         }
 
+        private double PricePerMillion
+        {
+            get
+            {
+                var totalXp = TotalXp(_auction.Level);
+                var totalMillionsXp = Math.Round(totalXp / 1000000);
+                var result = (double)(_auction.CurrentBid / totalMillionsXp);
+                return double.Round(result, 2);
+            }
+        }
+
+        private static double TotalXp(int level)
+        {
+            return Math.Ceiling(50 * Math.Pow(level, 3) / 3 - 100 * Math.Pow(level, 2) + 850 * level / 3 - 200);
+        }
+
         public override string ToString()
         {
             var ptCulture = new CultureInfo("pt-BR");
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($@"{VocationIcon}{_auction.VocationId} [{_auction.Level}] - {_auction.Nickname}");
-            stringBuilder.AppendLine($@"🌎 {_auction.ServerData.ServerName} - 💰 {_auction.CurrentBid.ToString("N0", ptCulture)}");
+            stringBuilder.AppendLine($@"🌎 {_auction.ServerData.ServerName} - 💰 {_auction.CurrentBid.ToString("N0", ptCulture)} ({PricePerMillion}tc/kk)");
             stringBuilder.AppendLine($@"🕛 {_auction.AuctionEndDateTime}");
             stringBuilder.AppendLine($@"📈 {_priceTrend.ToString("N0", ptCulture)}");
             return stringBuilder.ToString();
