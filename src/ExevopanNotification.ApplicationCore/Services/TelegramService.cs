@@ -29,7 +29,7 @@ namespace ExevopanNotification.ApplicationCore.Services
             foreach (var auctionNotification in auctionsNotifications)
             {
                 var telegramNotification = new TelegramAuctionNotification(auctionNotification.Auction, auctionNotification.PriceTrend);
-                await _telegramBotClient.SendTextMessageAsync(
+                await _telegramBotClient.SendMessage(
                     chatId: _telegramConfig.GroupId,
                     text: telegramNotification.ToString(),
                     replyMarkup: telegramNotification.GetInlineLinkButton());
@@ -72,10 +72,9 @@ namespace ExevopanNotification.ApplicationCore.Services
 
                 SetLastMessage(_telegramConfig.RuleBreakerGroupId, server, serverAuctionNotifications.Select(c => c.Auction.Nickname).ToArray());
 
-                await _telegramBotClient.SendTextMessageAsync(
+                await _telegramBotClient.SendMessage(
                     chatId: _telegramConfig.RuleBreakerGroupId,
                     text: message.ToString(),
-                    allowSendingWithoutReply: true,
                     parseMode: ParseMode.Markdown);
             }
 
@@ -83,10 +82,9 @@ namespace ExevopanNotification.ApplicationCore.Services
 
         public async Task Notify(string message)
         {
-            await _telegramBotClient.SendTextMessageAsync(
+            await _telegramBotClient.SendMessage(
                 chatId: _telegramConfig.GroupId,
-                text: message,
-                allowSendingWithoutReply: true);
+                text: message);
         }
 
         private void SetLastMessage<T>(string groupId, string serverName, T message)
