@@ -45,7 +45,7 @@ namespace ExevopanNotification.Domain.Notifications
             var ptCulture = new CultureInfo("pt-BR");
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($@"{VocationIcon}{_auction.VocationId} [{_auction.Level}] - {_auction.Nickname}");
-            stringBuilder.AppendLine($@"🌎 {_auction.ServerData.ServerName} - 💰 {_auction.CurrentBid.ToString("N0", ptCulture)} ({PricePerMillion}tc/kk)");
+            stringBuilder.AppendLine($@"🌎 {_auction.ServerData.ServerName} - 💰 {_auction.CurrentBid.ToString("N0", ptCulture)} ({PricePerMillion.ToString(new CultureInfo("en-US"))}tc/kk)");
             stringBuilder.AppendLine($@"🕛 {_auction.AuctionEndDateTime}");
             stringBuilder.AppendLine($@"📈 {_priceTrend.ToString("N0", ptCulture)}");
             return stringBuilder.ToString();

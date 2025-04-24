@@ -70,7 +70,7 @@ namespace ExevopanNotification.UnitTests.Domain.Notifications
 
             // assert
             var notificationMessage = telegramNotification.ToString();
-            notificationMessage.Should().Contain("(4,27tc/kk)");
+            notificationMessage.Should().Contain("(4.27tc/kk)");
 
         }
     }
