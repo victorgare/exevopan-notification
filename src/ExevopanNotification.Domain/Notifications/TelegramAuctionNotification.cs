@@ -35,6 +35,17 @@ namespace ExevopanNotification.Domain.Notifications
             }
         }
 
+        private double PricePerMillionTrend
+        {
+            get
+            {
+                var totalXp = TotalXp(_auction.Level);
+                var totalMillionsXp = Math.Round(totalXp / 1000000);
+                var result = (double)(_priceTrend / totalMillionsXp);
+                return double.Round(result, 2);
+            }
+        }
+
         private static double TotalXp(int level)
         {
             return Math.Ceiling(50 * Math.Pow(level, 3) / 3 - 100 * Math.Pow(level, 2) + 850 * level / 3 - 200);
@@ -47,7 +58,7 @@ namespace ExevopanNotification.Domain.Notifications
             stringBuilder.AppendLine($@"{VocationIcon}{_auction.VocationId} [{_auction.Level}] - {_auction.Nickname}");
             stringBuilder.AppendLine($@"🌎 {_auction.ServerData.ServerName} - 💰 {_auction.CurrentBid.ToString("N0", ptCulture)} ({PricePerMillion.ToString(new CultureInfo("en-US"))}tc/kk)");
             stringBuilder.AppendLine($@"🕛 {_auction.AuctionEndDateTime}");
-            stringBuilder.AppendLine($@"📈 {_priceTrend.ToString("N0", ptCulture)}");
+            stringBuilder.AppendLine($@"📈 {_priceTrend.ToString("N0", ptCulture)} ({PricePerMillionTrend.ToString(new CultureInfo("en-US"))}tc/kk)");
             return stringBuilder.ToString();
         }
     }

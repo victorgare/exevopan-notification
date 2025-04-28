@@ -71,7 +71,27 @@ namespace ExevopanNotification.UnitTests.Domain.Notifications
             // assert
             var notificationMessage = telegramNotification.ToString();
             notificationMessage.Should().Contain("(4.27tc/kk)");
+        }
 
+        [Fact]
+        public void ShouldCalculatePricePerMillionTrend()
+        {
+            // arrange
+            var auction = new Auction
+            {
+                CurrentBid = 3000,
+                Level = 350,
+                ServerData = new ServerData
+                {
+                    ServerName = "Server1"
+                },
+            };
+
+            // act
+            var telegramNotification = new TelegramAuctionNotification(auction, 1000);
+            // assert
+            var notificationMessage = telegramNotification.ToString();
+            notificationMessage.Should().Contain("(1.42tc/kk)");
         }
     }
 }
