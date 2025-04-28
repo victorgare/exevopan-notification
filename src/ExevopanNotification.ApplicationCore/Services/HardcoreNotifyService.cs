@@ -2,6 +2,7 @@
 using ExevopanNotification.ApplicationCore.Interfaces.Services;
 using ExevopanNotification.Domain.Constants;
 using ExevopanNotification.Domain.Entities;
+using ExevopanNotification.Domain.Enums;
 using ExevopanNotification.Domain.Notifications;
 
 namespace ExevopanNotification.ApplicationCore.Services
@@ -23,8 +24,8 @@ namespace ExevopanNotification.ApplicationCore.Services
         {
             var auctionFilter = new AuctionFilter
             {
-                ServerSet = [ServersConstant.Obscubra, ServersConstant.Jacabra],
-                MinLevel = 300,
+                Pvp = [PvpEnum.RetroHardcore],
+                MinLevel = 450,
                 PageSize = 100
             };
 
