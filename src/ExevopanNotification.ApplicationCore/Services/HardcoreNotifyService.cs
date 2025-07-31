@@ -45,7 +45,8 @@ namespace ExevopanNotification.ApplicationCore.Services
             {
                 var priceTrend = await _priceTrendService.Analyze(auction, filterLimits);
 
-                if (auction.CurrentBid < priceTrend)
+                // priceTrend is 0 when there are no similar auctions found
+                if (auction.CurrentBid < priceTrend || priceTrend == 0)
                 {
                     returnList.Add(new AuctionNotification
                     {
