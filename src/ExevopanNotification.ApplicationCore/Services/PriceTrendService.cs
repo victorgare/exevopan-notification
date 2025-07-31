@@ -64,6 +64,11 @@ namespace ExevopanNotification.ApplicationCore.Services
 
             var bidsSource = auctionsHistory.Select(c => Convert.ToDouble(c.CurrentBid)).ToArray();
 
+            if (bidsSource.Length == 0)
+            {
+                return 0;
+            }
+
             var quantile = bidsSource.Quantile(0.2);
             return Convert.ToInt32(quantile);
         }
